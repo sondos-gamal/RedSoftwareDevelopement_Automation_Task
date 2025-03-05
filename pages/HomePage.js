@@ -1,4 +1,4 @@
-const Page = require('./page'); // Import base class
+const Page = require('./page');
 
 class HomePage extends Page {
     get womenCategory() { return $('//a[@id="ui-id-4"]'); }

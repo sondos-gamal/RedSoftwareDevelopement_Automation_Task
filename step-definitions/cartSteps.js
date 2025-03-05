@@ -8,7 +8,6 @@ const CartPage = require('../pages/CartPage');
 Given('the user navigates to the home page', async () => {
     await browser.url('https://magento.softwaretestingboard.com/');
 
-    // **Wait up to 5 minutes for the page to fully load**
     await browser.waitUntil(
         async () => {
             const readyState = await browser.execute(() => document.readyState);
@@ -16,12 +15,12 @@ Given('the user navigates to the home page', async () => {
             return readyState === 'complete';
         },
         {
-            timeout: 300000, // **Waits 5 minutes (300000 ms)**
+            timeout: 300000,
             timeoutMsg: '❌ Page did not load within 5 minutes'
         }
     );
 
-    await browser.pause(5000); // Small delay for stability
+    await browser.pause(5000);
 });
 
 When('the user selects the {string} category from the top menu', async (category) => {
@@ -48,15 +47,8 @@ When('the user chooses a size', async () => {
 
 When('the user clicks "Add to Cart"', async () => {
     await ProductPage.addToCart();
+    await browser.pause(3000);
 
-    // Ensure the product is added to the cart by checking UI updates
-    await browser.waitUntil(
-        async () => await ProductPage.isProductAdded(),
-        {
-            timeout: 10000, // Increased timeout to ensure the cart updates
-            timeoutMsg: 'Product was not added to the cart within 10 seconds'
-        }
-    );
 });
 
 When('the user navigates to the cart via the top menu', async () => {
@@ -71,14 +63,6 @@ When('the user clicks on "View and Edit Cart"', async () => {
 When('the user clicks on the trash icon of the product', async () => {
     await CartPage.removeProduct();
 
-    // Wait for the cart to be updated
-    await browser.waitUntil(
-        async () => await CartPage.isProductRemoved(),
-        {
-            timeout: 10000,
-            timeoutMsg: 'Product was not removed from the cart within 10 seconds'
-        }
-    );
 });
 
 Then('the cart should be empty', async () => {

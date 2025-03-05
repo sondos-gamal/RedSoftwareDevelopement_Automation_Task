@@ -1,8 +1,8 @@
 class Page {
     /**
-     * Opens a specific page using the provided URL path.
-     * If no path is given, it opens the base URL.
+     * Opens the website using the provided URL path
      */
+
     async open(path = '/') {
         await browser.url(`${browser.options.baseUrl}${path}`);
     }
